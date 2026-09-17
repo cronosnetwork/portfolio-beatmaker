@@ -3,131 +3,222 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio Beatmaker | Producer Portfolio</title>
+  <title>Beatmaker & Ingenieur Son | Trap, Drill, Boom Bap</title>
+  <meta name="description" content="Beatmaker et ingenieur son specialise Trap, Drill, Boom Bap. Beats disponibles en licence. Mixage et mastering professionnel.">
+  <meta name="keywords" content="beatmaker, trap, drill, boom bap, beat, instrumental, mixage, mastering, ingenieur son">
+  <meta property="og:title" content="Beatmaker & Ingenieur Son">
+  <meta property="og:description" content="Beats Trap, Drill, Boom Bap disponibles. Mixage et mastering professionnel.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎛️</text></svg>">
   <style>
     :root {
-      --bg-color: #0d0f12;
-      --card-bg: #161a22;
-      --accent-color: #7c3aed;
-      --accent-hover: #6d28d9;
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
-      --border-color: #262c36;
+      --bg: #0a0a0f;
+      --bg2: #111118;
+      --card: #16161f;
+      --accent: #7c3aed;
+      --accent2: #a855f7;
+      --accent-glow: rgba(124, 58, 237, 0.25);
+      --text: #f0f0f5;
+      --muted: #71717a;
+      --border: #1e1e2a;
+      --success: #22c55e;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: var(--bg-color); color: var(--text-main); padding-bottom: 100px; line-height: 1.5; }
-    header { padding: 3rem 1.5rem; text-align: center; background: linear-gradient(180deg, rgba(124, 58, 237, 0.15) 0%, rgba(13, 15, 18, 0) 100%); }
-    header h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 0.5rem; }
-    header p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto 1.5rem auto; }
-    .social-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-    .social-links a { color: var(--text-main); text-decoration: none; background: var(--card-bg); border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; transition: border-color 0.2s; }
-    .social-links a:hover { border-color: var(--accent-color); }
-    main { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
-    .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; overflow-x: auto; padding-bottom: 0.5rem; }
-    .filter-btn { background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-muted); padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 500; white-space: nowrap; }
-    .filter-btn.active, .filter-btn:hover { background: var(--accent-color); color: white; border-color: var(--accent-color); }
-    .tracklist { display: flex; flex-direction: column; gap: 0.75rem; }
-    .track-card { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); padding: 0.85rem 1.25rem; border-radius: 12px; transition: transform 0.1s, border-color 0.2s; }
-    .track-card:hover { border-color: rgba(124, 58, 237, 0.5); }
-    .play-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--accent-color); border: none; color: white; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    .play-btn:hover { background: var(--accent-hover); }
-    .track-info h3 { font-size: 1rem; font-weight: 600; }
-    .track-meta { font-size: 0.85rem; color: var(--text-muted); }
-    .tag { background: rgba(255, 255, 255, 0.05); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; color: var(--text-muted); }
-    .buy-btn { background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 0.4rem 0.8rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; }
-    .buy-btn:hover { background: var(--accent-color); color: white; }
-    .sticky-player { position: fixed; bottom: 0; left: 0; right: 0; background: #12151c; border-top: 1px solid var(--border-color); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: 0 -10px 25px rgba(0,0,0,0.5); z-index: 100; }
-    .player-track-details { max-width: 250px; }
-    .player-track-details div { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .player-track-details small { color: var(--text-muted); }
-    audio { flex: 1; max-width: 500px; height: 36px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; padding-bottom: 90px; }
+    ::selection { background: var(--accent); color: white; }
+
+    /* Header */
+    .hero { padding: 5rem 1.5rem 4rem; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); pointer-events: none; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(124, 58, 237, 0.1); border: 1px solid rgba(124, 58, 237, 0.3); color: var(--accent2); padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 1rem; background: linear-gradient(135deg, #fff 0%, var(--accent2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero p { color: var(--muted); font-size: 1.15rem; max-width: 550px; margin: 0 auto 2rem auto; }
+    .hero-links { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+    .hero-links a { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--text); text-decoration: none; background: var(--card); border: 1px solid var(--border); padding: 0.6rem 1.2rem; border-radius: 50px; font-size: 0.9rem; font-weight: 500; transition: all 0.2s; }
+    .hero-links a:hover { border-color: var(--accent); background: rgba(124, 58, 237, 0.08); transform: translateY(-1px); }
+    .hero-links a.primary { background: var(--accent); border-color: var(--accent); color: white; }
+    .hero-links a.primary:hover { background: var(--accent2); }
+
+    /* Stats */
+    .stats { display: flex; justify-content: center; gap: 3rem; margin-top: 3rem; flex-wrap: wrap; }
+    .stat { text-align: center; }
+    .stat-num { font-size: 1.8rem; font-weight: 800; color: var(--accent2); }
+    .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* Main */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+    .section { margin-bottom: 4rem; }
+    .section-header { text-align: center; margin-bottom: 2rem; }
+    .section-header h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .section-header p { color: var(--muted); }
+
+    /* Filter */
+    .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; overflow-x: auto; padding-bottom: 0.5rem; scrollbar-width: none; }
+    .filter-bar::-webkit-scrollbar { display: none; }
+    .filter-btn { background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 0.5rem 1.1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem; white-space: nowrap; transition: all 0.2s; }
+    .filter-btn.active, .filter-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+
+    /* Tracks */
+    .tracklist { display: flex; flex-direction: column; gap: 0.6rem; }
+    .track { display: grid; grid-template-columns: 44px 1fr auto auto; align-items: center; gap: 1rem; background: var(--card); border: 1px solid var(--border); padding: 0.75rem 1.25rem; border-radius: 10px; transition: all 0.2s; }
+    .track:hover { border-color: rgba(124, 58, 237, 0.4); transform: translateX(4px); }
+    .track.playing { border-color: var(--accent); background: rgba(124, 58, 237, 0.06); }
+    .track-play { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); border: none; color: white; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0; }
+    .track-play:hover { transform: scale(1.08); background: var(--accent2); }
+    .track-play.playing { background: var(--success); }
+    .track-info h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.15rem; }
+    .track-info span { font-size: 0.8rem; color: var(--muted); }
+    .track-tag { background: rgba(255,255,255,0.04); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.72rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.03em; }
+    .track-buy { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 0.4rem 0.9rem; border-radius: 6px; text-decoration: none; font-size: 0.8rem; font-weight: 600; transition: all 0.2s; white-space: nowrap; }
+    .track-buy:hover { background: var(--accent); color: white; }
+
+    /* Sticky Player */
+    .player { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--border); padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; z-index: 200; }
+    .player-info { min-width: 0; }
+    .player-info .title { font-weight: 600; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .player-info .meta { font-size: 0.75rem; color: var(--muted); }
+    audio { flex: 1; max-width: 450px; height: 32px; border-radius: 8px; }
+
+    /* About */
+    .about-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; }
+    .about-avatar { width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; flex-shrink: 0; }
+    .about-text h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .about-text p { color: var(--muted); font-size: 0.95rem; }
+    .about-tags { display: flex; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap; }
+    .about-tags span { background: rgba(124, 58, 237, 0.1); color: var(--accent2); padding: 0.25rem 0.7rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
+
+    /* Footer */
+    .footer { text-align: center; padding: 3rem 1.5rem; color: var(--muted); font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+    .footer a { color: var(--accent2); text-decoration: none; }
+
     @media (max-width: 600px) {
-      .track-card { grid-template-columns: auto 1fr; grid-template-rows: auto auto; }
-      .buy-btn { grid-column: span 2; text-align: center; }
-      .sticky-player { flex-direction: column; align-items: stretch; }
+      .track { grid-template-columns: 40px 1fr; gap: 0.75rem; }
+      .track-tag, .track-buy { display: none; }
+      .player { flex-direction: column; padding: 0.6rem 1rem; }
+      .stats { gap: 1.5rem; }
+      .about-card { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
 <body>
-  <header>
+
+  <section class="hero">
+    <div class="hero-badge">🎵 Beatmaker & Ingenieur Son</div>
     <h1>BEATMAKER NAME</h1>
-    <p>Beatmaker & Ingenieur Son — Trap, Drill, Boom Bap</p>
-    <div class="social-links">
+    <p>Trap, Drill, Boom Bap — Beats originaux et services de mixage/mastering professionnel.</p>
+    <div class="hero-links">
+      <a href="#beats" class="primary">🎧 Ecouter les beats</a>
       <a href="https://beatstars.com" target="_blank">BeatStars</a>
       <a href="https://open.spotify.com" target="_blank">Spotify</a>
       <a href="https://instagram.com" target="_blank">Instagram</a>
-      <a href="mailto:contact@example.com">Contact</a>
+      <a href="mailto:contact@example.com">✉️ Contact</a>
     </div>
-  </header>
-  <main>
-    <div class="filter-bar">
-      <button class="filter-btn active" onclick="filterGenre('all')">Tous</button>
-      <button class="filter-btn" onclick="filterGenre('trap')">Trap</button>
-      <button class="filter-btn" onclick="filterGenre('drill')">Drill</button>
-      <button class="filter-btn" onclick="filterGenre('boombap')">Boom Bap</button>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Beats produits</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Annees d'experience</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Autonome</div></div>
     </div>
-    <div class="tracklist" id="tracklist">
-      <div class="track-card" data-genre="trap">
-        <button class="play-btn" onclick="playAudio('audio/beat-1-trap-dark.mp3', 'Dark Shadow', '110 BPM | Am')">▶</button>
-        <div class="track-info">
-          <h3>Dark Shadow</h3>
-          <span class="track-meta">110 BPM • Am</span>
-        </div>
-        <span class="tag">Trap</span>
-        <a href="mailto:contact@example.com?subject=Licence%20Beat%20Dark%20Shadow" class="buy-btn">Reserver</a>
+  </section>
+
+  <div class="container">
+
+    <section class="section" id="beats">
+      <div class="section-header">
+        <h2>Catalogue de Beats</h1>
+        <p>Ecoutez, filtrez par genre, et reservez votre beat.</p>
       </div>
-      <div class="track-card" data-genre="trap">
-        <button class="play-btn" onclick="playAudio('audio/beat-2-trap-trizzy.mp3', 'Trizzy Flow', '140 BPM | Dm')">▶</button>
-        <div class="track-info">
-          <h3>Trizzy Flow</h3>
-          <span class="track-meta">140 BPM • Dm</span>
-        </div>
-        <span class="tag">Trap</span>
-        <a href="mailto:contact@example.com?subject=Licence%20Beat%20Trizzy%20Flow" class="buy-btn">Reserver</a>
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterGenre('all', this)">Tous</button>
+        <button class="filter-btn" onclick="filterGenre('trap', this)">Trap</button>
+        <button class="filter-btn" onclick="filterGenre('drill', this)">Drill</button>
+        <button class="filter-btn" onclick="filterGenre('boombap', this)">Boom Bap</button>
       </div>
-      <div class="track-card" data-genre="drill">
-        <button class="play-btn" onclick="playAudio('audio/beat-3-drill-speed.mp3', 'Speed Drill', '142 BPM | Cm')">▶</button>
-        <div class="track-info">
-          <h3>Speed Drill</h3>
-          <span class="track-meta">142 BPM • Cm</span>
+      <div class="tracklist" id="tracklist">
+        <div class="track" data-genre="trap">
+          <button class="track-play" onclick="playAudio(this, 'audio/beat-1-trap-dark.mp3', 'Dark Shadow', '110 BPM · Am')">▶</button>
+          <div class="track-info"><h3>Dark Shadow</h3><span>110 BPM · Am</span></div>
+          <span class="track-tag">Trap</span>
+          <a href="mailto:contact@example.com?subject=Reservation%20Dark%20Shadow" class="track-buy">Reserver</a>
         </div>
-        <span class="tag">Drill</span>
-        <a href="mailto:contact@example.com?subject=Licence%20Beat%20Speed%20Drill" class="buy-btn">Reserver</a>
+        <div class="track" data-genre="trap">
+          <button class="track-play" onclick="playAudio(this, 'audio/beat-2-trap-trizzy.mp3', 'Trizzy Flow', '140 BPM · Dm')">▶</button>
+          <div class="track-info"><h3>Trizzy Flow</h3><span>140 BPM · Dm</span></div>
+          <span class="track-tag">Trap</span>
+          <a href="mailto:contact@example.com?subject=Reservation%20Trizzy%20Flow" class="track-buy">Reserver</a>
+        </div>
+        <div class="track" data-genre="drill">
+          <button class="track-play" onclick="playAudio(this, 'audio/beat-3-drill-speed.mp3', 'Speed Drill', '142 BPM · Cm')">▶</button>
+          <div class="track-info"><h3>Speed Drill</h3><span>142 BPM · Cm</span></div>
+          <span class="track-tag">Drill</span>
+          <a href="mailto:contact@example.com?subject=Reservation%20Speed%20Drill" class="track-buy">Reserver</a>
+        </div>
       </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="section-header"><h2>A propos</h2></div>
+      <div class="about-card">
+        <div class="about-avatar">🎹</div>
+        <div class="about-text">
+          <h3>Beatmaker & Ingenieur Son</h3>
+          <p>6 ans de production musicale. Specialise Trap, Drill et Boom Bap. Je compose des beats originaux et je propose des services de mixage et mastering professionnel pour artistes independants.</p>
+          <div class="about-tags">
+            <span>Logic Pro</span>
+            <span>Ableton</span>
+            <span>Mixage</span>
+            <span>Mastering</span>
+            <span>Sound Design</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2026 Beatmaker Name — Tous droits reserves. <a href="mailto:contact@example.com">Contact</a></p>
+  </footer>
+
+  <div class="player">
+    <div class="player-info">
+      <div class="title" id="player-title">Selectionnez une prod</div>
+      <div class="meta" id="player-meta">Appuyez sur ▶ pour ecouter</div>
     </div>
-  </main>
-  <div class="sticky-player">
-    <div class="player-track-details">
-      <div id="player-title">Selectionnez une prod</div>
-      <small id="player-meta">Appuyez sur ▶ pour ecouter</small>
-    </div>
-    <audio id="global-audio-player" controls>
-      <source id="audio-source" src="" type="audio/mpeg">
+    <audio id="global-audio" controls preload="none">
+      <source id="audio-src" src="" type="audio/mpeg">
     </audio>
   </div>
+
   <script>
-    const player = document.getElementById('global-audio-player');
-    const source = document.getElementById('audio-source');
-    const titleDisplay = document.getElementById('player-title');
-    const metaDisplay = document.getElementById('player-meta');
-    function playAudio(fileSrc, title, meta) {
-      source.src = fileSrc;
-      titleDisplay.innerText = title;
-      metaDisplay.innerText = meta;
-      player.load();
-      player.play();
+    const audio = document.getElementById('global-audio');
+    const src = document.getElementById('audio-src');
+    const pTitle = document.getElementById('player-title');
+    const pMeta = document.getElementById('player-meta');
+    let currentBtn = null;
+
+    function playAudio(btn, file, title, meta) {
+      if (currentBtn && currentBtn !== btn) { currentBtn.classList.remove('playing'); currentBtn.innerText = '▶'; }
+      currentBtn = btn;
+      src.src = file;
+      pTitle.innerText = title;
+      pMeta.innerText = meta;
+      audio.load();
+      audio.play();
+      btn.classList.add('playing');
+      btn.innerText = '⏸';
+      document.querySelectorAll('.track').forEach(t => t.classList.remove('playing'));
+      btn.closest('.track').classList.add('playing');
     }
-    function filterGenre(genre) {
-      const cards = document.querySelectorAll('.track-card');
-      const buttons = document.querySelectorAll('.filter-btn');
-      buttons.forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
-      cards.forEach(card => {
-        if (genre === 'all' || card.getAttribute('data-genre') === genre) {
-          card.style.display = 'grid';
-        } else {
-          card.style.display = 'none';
-        }
+
+    audio.addEventListener('play', () => { if (currentBtn) { currentBtn.classList.add('playing'); currentBtn.innerText = '⏸'; } });
+    audio.addEventListener('pause', () => { if (currentBtn) { currentBtn.classList.remove('playing'); currentBtn.innerText = '▶'; } });
+
+    function filterGenre(genre, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.track').forEach(card => {
+        card.style.display = (genre === 'all' || card.dataset.genre === genre) ? 'grid' : 'none';
       });
     }
   </script>
