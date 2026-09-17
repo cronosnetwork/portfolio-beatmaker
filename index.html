@@ -10,6 +10,8 @@
   <meta property="og:description" content="Beats Trap, Drill, Boom Bap disponibles. Mixage et mastering professionnel.">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎛️</text></svg>">
+  <!-- LemonSqueezy Checkout Script -->
+  <script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
   <style>
     :root {
       --bg: #0a0a0f;
@@ -22,6 +24,7 @@
       --muted: #71717a;
       --border: #1e1e2a;
       --success: #22c55e;
+      --gold: #f59e0b;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -70,7 +73,7 @@
     .track-info h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.15rem; }
     .track-info span { font-size: 0.8rem; color: var(--muted); }
     .track-tag { background: rgba(255,255,255,0.04); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.72rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.03em; }
-    .track-buy { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 0.4rem 0.9rem; border-radius: 6px; text-decoration: none; font-size: 0.8rem; font-weight: 600; transition: all 0.2s; white-space: nowrap; }
+    .track-buy { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 0.4rem 0.9rem; border-radius: 6px; text-decoration: none; font-size: 0.8rem; font-weight: 600; transition: all 0.2s; white-space: nowrap; cursor: pointer; }
     .track-buy:hover { background: var(--accent); color: white; }
 
     /* Sticky Player */
@@ -88,6 +91,24 @@
     .about-tags { display: flex; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap; }
     .about-tags span { background: rgba(124, 58, 237, 0.1); color: var(--accent2); padding: 0.25rem 0.7rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
 
+    /* License Modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(6px); z-index: 300; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-overlay.active { display: flex; }
+    .modal { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; max-width: 480px; width: 100%; position: relative; }
+    .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--muted); font-size: 1.5rem; cursor: pointer; line-height: 1; }
+    .modal-close:hover { color: var(--text); }
+    .modal h3 { font-size: 1.3rem; margin-bottom: 0.3rem; }
+    .modal .modal-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
+    .license-list { display: flex; flex-direction: column; gap: 0.6rem; }
+    .license-option { display: flex; align-items: center; justify-content: space-between; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; transition: all 0.2s; cursor: pointer; }
+    .license-option:hover { border-color: var(--accent); background: rgba(124, 58, 237, 0.05); }
+    .license-left { display: flex; flex-direction: column; gap: 0.15rem; }
+    .license-name { font-weight: 700; font-size: 0.95rem; }
+    .license-desc { font-size: 0.78rem; color: var(--muted); }
+    .license-price { font-weight: 800; font-size: 1.1rem; color: var(--accent2); white-space: nowrap; }
+    .license-buy { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: background 0.2s; }
+    .license-buy:hover { background: var(--accent2); }
+
     /* Footer */
     .footer { text-align: center; padding: 3rem 1.5rem; color: var(--muted); font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 2rem; }
     .footer a { color: var(--accent2); text-decoration: none; }
@@ -99,6 +120,7 @@
       .player { flex-direction: column; padding: 0.6rem 1rem; }
       .stats { gap: 1.5rem; }
       .about-card { flex-direction: column; text-align: center; }
+      .modal { padding: 1.5rem; }
     }
   </style>
 </head>
@@ -127,7 +149,7 @@
     <section class="section" id="beats">
       <div class="section-header">
         <h2>Catalogue de Beats</h2>
-        <p>Ecoutez, filtrez par genre, et reservez votre beat.</p>
+        <p>Ecoutez, filtrez par genre, et achetez votre licence.</p>
       </div>
       <div class="filter-bar">
         <button class="filter-btn active" onclick="filterGenre('all', this)">Tous</button>
@@ -136,24 +158,28 @@
         <button class="filter-btn" onclick="filterGenre('boombap', this)">Boom Bap</button>
       </div>
       <div class="tracklist" id="tracklist">
-        <div class="track" data-genre="trap">
+
+        <div class="track" data-genre="trap" data-name="Dark Shadow">
           <button class="track-play" onclick="playAudio(this, 'audio/beat-1-trap-dark.mp3', 'Dark Shadow', '110 BPM · Am')">▶</button>
           <div class="track-info"><h3>Dark Shadow</h3><span>110 BPM · Am</span></div>
           <span class="track-tag">Trap</span>
-          <a href="mailto:contact@example.com?subject=Reservation%20Dark%20Shadow" class="track-buy">Reserver</a>
+          <button class="track-buy" onclick="openLicense('Dark Shadow')">Acheter</button>
         </div>
-        <div class="track" data-genre="trap">
+
+        <div class="track" data-genre="trap" data-name="Trizzy Flow">
           <button class="track-play" onclick="playAudio(this, 'audio/beat-2-trap-trizzy.mp3', 'Trizzy Flow', '140 BPM · Dm')">▶</button>
           <div class="track-info"><h3>Trizzy Flow</h3><span>140 BPM · Dm</span></div>
           <span class="track-tag">Trap</span>
-          <a href="mailto:contact@example.com?subject=Reservation%20Trizzy%20Flow" class="track-buy">Reserver</a>
+          <button class="track-buy" onclick="openLicense('Trizzy Flow')">Acheter</button>
         </div>
-        <div class="track" data-genre="drill">
+
+        <div class="track" data-genre="drill" data-name="Speed Drill">
           <button class="track-play" onclick="playAudio(this, 'audio/beat-3-drill-speed.mp3', 'Speed Drill', '142 BPM · Cm')">▶</button>
           <div class="track-info"><h3>Speed Drill</h3><span>142 BPM · Cm</span></div>
           <span class="track-tag">Drill</span>
-          <a href="mailto:contact@example.com?subject=Reservation%20Speed%20Drill" class="track-buy">Reserver</a>
+          <button class="track-buy" onclick="openLicense('Speed Drill')">Acheter</button>
         </div>
+
       </div>
     </section>
 
@@ -191,7 +217,59 @@
     </audio>
   </div>
 
+  <!-- License Selection Modal -->
+  <div class="modal-overlay" id="license-modal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeLicense()">&times;</button>
+      <h3 id="modal-title">Beat Name</h3>
+      <p class="modal-sub">Choisissez votre licence</p>
+      <div class="license-list">
+        <div class="license-option">
+          <div class="license-left">
+            <span class="license-name">Licence Non-Exclusive MP3</span>
+            <span class="license-desc">MP3 HD sans tag + Contrat PDF</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span class="license-price">30 €</span>
+            <button class="license-buy" onclick="buyLicense('mp3')">Acheter</button>
+          </div>
+        </div>
+        <div class="license-option">
+          <div class="license-left">
+            <span class="license-name">Licence Non-Exclusive WAV</span>
+            <span class="license-desc">WAV 24-bit sans tag + Contrat PDF</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span class="license-price">50 €</span>
+            <button class="license-buy" onclick="buyLicense('wav')">Acheter</button>
+          </div>
+        </div>
+        <div class="license-option">
+          <div class="license-left">
+            <span class="license-name">Licence Trackout / Stems</span>
+            <span class="license-desc">Pistes separees + Contrat PDF</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span class="license-price">100 €</span>
+            <button class="license-buy" onclick="buyLicense('stems')">Acheter</button>
+          </div>
+        </div>
+        <div class="license-option">
+          <div class="license-left">
+            <span class="license-name">Licence Exclusive</span>
+            <span class="license-desc">Retrait du site + Droits complets</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span class="license-price">300 €+</span>
+            <button class="license-buy" onclick="buyLicense('exclusive')">Acheter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // ===== Audio Player =====
     const audio = document.getElementById('global-audio');
     const src = document.getElementById('audio-src');
     const pTitle = document.getElementById('player-title');
@@ -215,6 +293,7 @@
     audio.addEventListener('play', () => { if (currentBtn) { currentBtn.classList.add('playing'); currentBtn.innerText = '⏸'; } });
     audio.addEventListener('pause', () => { if (currentBtn) { currentBtn.classList.remove('playing'); currentBtn.innerText = '▶'; } });
 
+    // ===== Genre Filter =====
     function filterGenre(genre, btn) {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -222,6 +301,74 @@
         card.style.display = (genre === 'all' || card.dataset.genre === genre) ? 'grid' : 'none';
       });
     }
+
+    // ===== License Modal =====
+    let currentBeat = '';
+
+    // ========================================
+    // REMPLACER CES URLs par vos vrais liens LemonSqueezy
+    // Quand le compte sera crée, chaque beat aura 4 URLs (mp3, wav, stems, exclusive)
+    // ========================================
+    const LEMON_URLS = {
+      // Beat 1 — Dark Shadow
+      'Dark Shadow': {
+        mp3:      'https://VOTRE-STORE.lemonsqueezy.com/checkout/buy/ID_MP3_DARK_SHADOW',
+        wav:      'https://VOTRE-STORE.lemonsqueezy.com/checkout/buy/ID_WAV_DARK_SHADOW',
+        stems:    'https://VOTRE-STORE.lemonsqueezy.com/checkout/buy/ID_STEMS_DARK_SHADOW',
+        exclusive:'https://VOTRE-STORE.lemonsqueezy.com/checkout/buy/ID_EXCL_DARK_SHADOW'
+      },
+      // Beat 2 — Trizzy Flow
+      'Trizzy Flow': {
+        mp3:      'https://VOTRE-STORE.lemonsqueezy.com/checkout/buy/ID_MP3_TRIZZY',
+        wav:      'https://VOTRE-STORE.lemonsqueezy.com/checkout/buy/ID_WAV_TRIZZY',
+        stems:    'https://VOTRE-STORE.lemonsqueezy.com/checkout/buy/ID_STEMS_TRIZZY',
+        exclusive:'https://VOTRE-STORE.lemonsqueezy.com/checkout/buy/ID_EXCL_TRIZZY'
+      },
+      // Beat 3 — Speed Drill
+      'Speed Drill': {
+        mp3:      'https://VOTRE-STORE.lemonsqueezy.com/checkout/buy/ID_MP3_DRILL',
+        wav:      'https://VOTRE-STORE.lemonsqueezy.com/checkout/buy/ID_WAV_DRILL',
+        stems:    'https://VOTRE-STORE.lemonsqueezy.com/checkout/buy/ID_STEMS_DRILL',
+        exclusive:'https://VOTRE-STORE.lemonsqueezy.com/checkout/buy/ID_EXCL_DRILL'
+      }
+    };
+
+    function openLicense(beatName) {
+      currentBeat = beatName;
+      document.getElementById('modal-title').innerText = beatName;
+      document.getElementById('license-modal').classList.add('active');
+    }
+
+    function closeLicense() {
+      document.getElementById('license-modal').classList.remove('active');
+      currentBeat = '';
+    }
+
+    function buyLicense(type) {
+      if (!currentBeat || !LEMON_URLS[currentBeat]) { alert('Beat non configure. Ajoutez les liens LemonSqueezy.'); return; }
+      const url = LEMON_URLS[currentBeat][type];
+      if (!url || url.includes('VOTRE-STORE')) {
+        alert('Lien LemonSqueezy non configure pour ce beat.\n\nRemplacez les URLs dans le fichier index.html (const LEMON_URLS).');
+        return;
+      }
+      // Ouvre le checkout LemonSqueezy en pop-up
+      if (typeof LemonSqueezy !== 'undefined') {
+        LemonSqueezy.Url.open(url);
+      } else {
+        window.open(url, '_blank');
+      }
+      closeLicense();
+    }
+
+    // Fermer le modal en cliquant sur l'overlay
+    document.getElementById('license-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeLicense();
+    });
+
+    // Fermer avec Echap
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLicense();
+    });
   </script>
 </body>
 </html>
